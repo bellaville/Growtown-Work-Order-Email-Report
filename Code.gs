@@ -38,6 +38,9 @@ function getWeekWorkOrders() {
     return values;
 }
 
+/**
+ * Send an email report of work orders from the last week to specified recipients
+ */
 function sendWeeklyEmail() {
     let summaryTable =
         `<h2>Work Orders pushed to Inventory in the last week</h2>
@@ -100,10 +103,13 @@ function sendWeeklyEmail() {
 
     const formatLastWeek = Utilities.formatDate(lastWeek, timeZone, "yyyy-MM-dd");
 
-    recipients = `${EMAILS.Dev}, ${EMAILS.QA}`;
+    recipients = `${EMAILS.Dev}, ${EMAILS.QA}, ${EMAILS.QC}, ${EMAILS.CEO}`;
     GmailApp.sendEmail(recipients, "Work Orders from the last week: " + formatLastWeek + " - " + formatToday, "", { htmlBody: summaryTable });
 }
 
+/**
+ * Convert timestamp into formatted string
+ */
 function getTimeStamp(rawTimestamp) {
     let formattedTimestamp = "N/A";
     if (rawTimestamp) {
